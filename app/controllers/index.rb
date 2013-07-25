@@ -1,7 +1,6 @@
 get '/' do
   # render home page
   @users = User.all
-
   erb :index
 end
 
@@ -55,4 +54,22 @@ post '/users' do
     # an error occurred, re-render the sign-up form, displaying errors
     erb :sign_up
   end
+end
+
+get '/users/:id' do
+  p current_user.id
+  p params[:id]
+  if current_user && current_user.id == params[:id].to_i
+    @user = User.find(params[:id])
+    erb :user
+  else
+    redirect to('/')
+  end
+end
+
+post '/users/:id' do
+  @user = User.find(params[:id])
+  skill = Skill.find_or_create_by_name_and_context(params[:skill][:skill], params[:skill][:context])
+  @user.users_skills.create(skill_id: skill.id, years: params[:skill][:years], formal: params[:skill][:formal])
+  redirect to("/users/#{@user.id}")
 end

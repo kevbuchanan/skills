@@ -1,0 +1,28 @@
+<div class='container'>
+<h4>New Skill<h4>
+<form action='/users/<%=@user.id%>' method='post'>
+  <input type='text' name='skill[skill]' placeholder="Skill Name"><br>
+  <input type="text" name='skill[context]' placeholder="technical or creative"><br>
+  <input type='text' name='skill[years]' placeholder="Years Experience"><br>
+  <input type='text' name='skill[formal]' placeholder="Formal Experience (Yes or No)"><br>
+  <input type='submit' value='Add Skill'>
+</form>
+
+<h4>Current Skills</h4>
+  <table>
+    <thead>
+      <th>Skill</th>
+      <th>Years</th>
+      <th>Formal?</th>
+    </thead>
+    <tbody>
+<% @user.users_skills.each do |userskill| %>
+<tr>
+  <td><%=userskill.skill.name%> (<%=userskill.skill.context%>)</td>
+  <td><%=userskill.years%></td>
+  <td><%=userskill.formal%></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+</div>
